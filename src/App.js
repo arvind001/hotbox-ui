@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
@@ -6,6 +7,13 @@ class App extends React.Component {
   constructor(props){
     super(props);
   }
+
+  getData = async boxPost => {
+    const data = await axios.post('http://127.0.0.1:5000/registerUser', boxPost);
+    return data;
+  }
+
+
   submitBoxPost = () => {
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
@@ -16,15 +24,18 @@ class App extends React.Component {
     const price= document.getElementById("price").value;
 
     var boxPost = {
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
-      emailAddress: emailAddress,
-      boxAddress: boxAddress,
-      vibe: vibe,
-      price: price
+      "firstName": firstName,
+      "lastName": lastName,
+      "phoneNumber": phoneNumber,
+      "emailAddress": emailAddress,
+      "boxAddress": boxAddress
     };
     console.log(boxPost, "boxPost");
+    axios.post('http://127.0.0.1:5000/registerUser', boxPost).then((res) => {
+      console.log(res, "result");
+    });
+    // console.log("data", this.getData(boxPost));
+    
 
   }
 
@@ -47,7 +58,7 @@ class App extends React.Component {
           <p className="input-title">Price:</p> 
           <input id="price" type="text" name="Price" required=""/>
           <button type="submit" id="host-hotbox" value="Send" onClick={() => this.submitBoxPost()}>
-            Host Box
+            Host Box 2
           </button>
         </div>
       </div>
